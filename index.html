@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Catálogo Universitario México 2025</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --rosa:     #f472b6;
+      --rosa-light: #fce7f3;
+      --rosa-dark: #be185d;
+      --crema:    #fff7fb;
+      --texto:    #1e1b2e;
+      --gris:     #6b6880;
+      --blanco:   #ffffff;
+      --pub:      #a855f7;
+      --priv:     #ec4899;
+      --card-shadow: 0 4px 24px rgba(244,114,182,0.13);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--crema);
+      color: var(--texto);
+      line-height: 1.6;
+    }
+
+    /* ── NAV ── */
+    nav {
+      background: var(--blanco);
+      border-bottom: 2px solid var(--rosa-light);
+      position: sticky; top: 0; z-index: 100;
+      padding: 0 2rem;
+      display: flex; align-items: center; gap: 2rem;
+      height: 60px;
+    }
+    nav .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      color: var(--rosa-dark);
+      white-space: nowrap;
+    }
+    nav ul {
+      list-style: none;
+      display: flex; gap: 1.5rem; flex-wrap: wrap;
+      margin-left: auto;
+    }
+    nav ul a {
+      text-decoration: none;
+      color: var(--gris);
+      font-size: .88rem;
+      font-weight: 500;
+      transition: color .2s;
+    }
+    nav ul a:hover { color: var(--rosa-dark); }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, #fce7f3 0%, #f0abfc 50%, #fbcfe8 100%);
+      padding: 5rem 2rem 4rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '🎓';
+      font-size: 8rem;
+      position: absolute; top: -20px; right: -10px;
+      opacity: .12;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 6vw, 3.6rem);
+      color: var(--rosa-dark);
+      line-height: 1.15;
+      max-width: 780px; margin: 0 auto .8rem;
+    }
+    .hero p {
+      font-size: 1.05rem; color: #7c3aed;
+      max-width: 560px; margin: 0 auto 2rem;
+    }
+    .hero .badges {
+      display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;
+    }
+    .badge {
+      padding: .4rem 1.2rem;
+      border-radius: 999px;
+      font-size: .82rem; font-weight: 600;
+      letter-spacing: .03em;
+    }
+    .badge-pub  { background: #ede9fe; color: var(--pub); }
+    .badge-priv { background: var(--rosa-light); color: var(--rosa-dark); }
+    .badge-num  { background: #fff; color: var(--rosa-dark); border: 1.5px solid var(--rosa); }
+
+    /* ── SECTION TITLE ── */
+    .section-title {
+      text-align: center;
+      padding: 3.5rem 1rem 1rem;
+    }
+    .section-title .eyebrow {
+      font-size: .78rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: .12em;
+      color: var(--rosa);
+      margin-bottom: .4rem;
+    }
+    .section-title h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 4vw, 2.2rem);
+      color: var(--texto);
+    }
+    .divider {
+      width: 60px; height: 3px;
+      background: linear-gradient(90deg, var(--rosa), var(--pub));
+      border-radius: 9px;
+      margin: .8rem auto 0;
+    }
+
+    /* ── GRID ── */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 3rem;
+    }
+
+    /* ── CARD ── */
+    .card {
+      background: var(--blanco);
+      border-radius: 18px;
+      box-shadow: var(--card-shadow);
+      overflow: hidden;
+      display: flex; flex-direction: column;
+      transition: transform .25s, box-shadow .25s;
+      border: 1.5px solid #fce7f3;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 36px rgba(244,114,182,.22);
+    }
+    .card-header {
+      padding: 1.4rem 1.4rem 1rem;
+      display: flex; align-items: flex-start; gap: .9rem;
+    }
+    .uni-icon {
+      width: 52px; height: 52px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+    .pub-icon  { background: #ede9fe; }
+    .priv-icon { background: var(--rosa-light); }
+    .card-header h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem; line-height: 1.3;
+      color: var(--texto);
+    }
+    .card-header .siglas {
+      font-size: .75rem; color: var(--gris); margin-top: .15rem;
+    }
+    .tipo-badge {
+      margin-left: auto;
+      padding: .25rem .75rem;
+      border-radius: 999px;
+      font-size: .7rem; font-weight: 600;
+      white-space: nowrap;
+    }
+    .tipo-pub  { background: #ede9fe; color: var(--pub); }
+    .tipo-priv { background: var(--rosa-light); color: var(--rosa-dark); }
+
+    .card-body { padding: 0 1.4rem 1.2rem; flex: 1; }
+    .info-row {
+      display: flex; gap: .5rem;
+      align-items: flex-start;
+      margin-bottom: .55rem;
+      font-size: .85rem;
+    }
+    .info-row .icon { font-size: .95rem; flex-shrink: 0; margin-top: .05rem; }
+    .info-row strong { color: var(--texto); }
+    .info-row span, .info-row a { color: var(--gris); }
+    .info-row a { color: var(--rosa-dark); text-decoration: none; }
+    .info-row a:hover { text-decoration: underline; }
+
+    .carreras-list {
+      list-style: none;
+      margin: .3rem 0 0 0;
+    }
+    .carreras-list li {
+      font-size: .82rem; color: var(--gris);
+      padding: .15rem 0;
+    }
+    .carreras-list li::before {
+      content: '✦ ';
+      color: var(--rosa);
+      font-size: .65rem;
+    }
+
+    .card-footer {
+      padding: 1rem 1.4rem;
+      border-top: 1px solid var(--rosa-light);
+      display: flex; gap: .7rem; flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex; align-items: center; gap: .35rem;
+      padding: .45rem 1.1rem;
+      border-radius: 999px;
+      font-size: .8rem; font-weight: 600;
+      text-decoration: none;
+      transition: all .2s;
+      border: none; cursor: pointer;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--rosa), var(--rosa-dark));
+      color: #fff;
+    }
+    .btn-primary:hover { opacity: .88; }
+    .btn-map {
+      background: var(--rosa-light);
+      color: var(--rosa-dark);
+    }
+    .btn-map:hover { background: #fbb6ce; }
+
+    /* ── CONTACTO ── */
+    #contacto {
+      background: linear-gradient(135deg, #fdf2f8, #f5f3ff);
+      padding: 4rem 1.5rem;
+    }
+    .contacto-inner {
+      max-width: 600px; margin: 0 auto;
+      background: var(--blanco);
+      border-radius: 20px;
+      padding: 2.5rem;
+      box-shadow: var(--card-shadow);
+      border: 1.5px solid var(--rosa-light);
+    }
+    .contacto-inner h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      color: var(--rosa-dark);
+      margin-bottom: .3rem;
+    }
+    .autoria {
+      background: var(--rosa-light);
+      border-radius: 12px;
+      padding: 1rem 1.2rem;
+      margin: 1.2rem 0;
+      font-size: .9rem;
+    }
+    .autoria p { margin-bottom: .2rem; }
+    .autoria strong { color: var(--rosa-dark); }
+
+    .form-group { margin-bottom: 1.1rem; }
+    .form-group label {
+      display: block;
+      font-size: .82rem; font-weight: 600;
+      color: var(--texto);
+      margin-bottom: .35rem;
+    }
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: .65rem .9rem;
+      border: 1.5px solid #fce7f3;
+      border-radius: 10px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .9rem;
+      color: var(--texto);
+      outline: none;
+      transition: border .2s;
+      background: var(--crema);
+    }
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--rosa);
+    }
+    .form-group textarea { resize: vertical; min-height: 100px; }
+    .btn-submit {
+      width: 100%;
+      padding: .75rem;
+      background: linear-gradient(135deg, var(--rosa), var(--rosa-dark));
+      color: #fff;
+      border: none; border-radius: 12px;
+      font-size: .95rem; font-weight: 600;
+      cursor: pointer;
+      transition: opacity .2s;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .btn-submit:hover { opacity: .88; }
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 1rem;
+      background: #d1fae5;
+      border-radius: 10px;
+      color: #065f46;
+      font-weight: 600;
+      margin-top: 1rem;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--texto);
+      color: #d4b8de;
+      text-align: center;
+      padding: 2rem 1rem;
+      font-size: .82rem;
+    }
+    footer span { color: var(--rosa); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      nav ul { gap: .8rem; }
+      .hero { padding: 3.5rem 1.2rem 3rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">🎓 Catálogo Universitario</div>
+  <ul>
+    <li><a href="#publicas">Públicas</a></li>
+    <li><a href="#privadas">Privadas</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <h1>Guía de Universidades<br>en México 2025</h1>
+  <p>Encuentra tu opción ideal: explora 12 instituciones con carreras, costos y ubicaciones.</p>
+  <div class="badges">
+    <span class="badge badge-num">12 Universidades</span>
+    <span class="badge badge-pub">6 Públicas</span>
+    <span class="badge badge-priv">6 Privadas</span>
+  </div>
+</section>
+
+<!-- PÚBLICAS -->
+<div class="section-title" id="publicas">
+  <p class="eyebrow">Régimen Público</p>
+  <h2>Universidades Públicas</h2>
+  <div class="divider"></div>
+</div>
+
+<div class="grid">
+
+  <!-- 1. UNAM -->
+  <div class="card">
+    <div class="card-header">
+      <div class="uni-icon pub-icon">🏛️</div>
+      <div>
+        <h3>Universidad Nacional Autónoma de México</h3>
+        <p class="siglas">UNAM</p>
+      </div>
+      <span class="tipo-badge tipo-pub">Pública Autónoma</span>
+    </div>
+    <div class="card-body">
+      <div class="info-row">
+        <span class="icon">📍</span>
+        <span>Cd. Universitaria, Coyoacán, CDMX</span>
+      </div>
+      <div class="info-row">
+        <span class="icon">💰</span>
+        <span>Cuota de recuperación: <strong>$0.25 MXN/año</strong> (gratuita)</span>
+      </div>
+      <div class="info-row">
+        <span class="icon">📚</span>
+        <strong>Carreras destacadas:</strong>
+      </div>
+      <ul class="carreras-list">
+        <li>Medicina</li>
+        <li>Derecho</li>
+        <li>Ingeniería Civil</li>
+      </ul>
+    </div>
+    <div class="card-footer">
+      <a href="https://www.unam.mx" target="_blank" class="btn btn-primary">🌐 Portal oficial</a>
+      <a href="https://maps.google.com/?q=UNAM+Ciudad+Universitaria+CDMX" target="_blank" class="btn btn-map">📍 Ver mapa</a>
+    </div>
+  </div>
+
+  <!-- 2. IPN -->
+  <div class="card">
+    <div class="card-header">
+      <div class="uni-icon pub-icon">⚙️</div>
+      <div>
+        <h3>Instituto Politécnico Nacional</h3>
+        <p class="siglas">IPN</p>
+      </div>
+      <span class="tipo-badge tipo-pub">Pública</span>
+    </div>
+    <div class="card-body">
+      <div class="info-row">
+        <span class="icon">📍</span>
+        <span>Av. Luis Enrique Erro S/N, Zacatenco, CDMX</span>
+      </div>
+      <div class="info-row">
+        <span class="icon">💰</span>
+        <span>Cuota semestral: <strong>~$400–$500 MXN</strong></span>
+      </div>
+      <div class="info-row">
+        <span class="icon">📚</span>
+        <strong>Carreras destacadas:</strong>
+      </div>
+      <ul class="carreras-list">
+        <li>Ingeniería en Sistemas Computacionales</li>
+        <li>Medicina</li>
+        <li>Ingeniería Industrial</li>
+      </ul>
+    </div>
+    <div class="card-footer">
+      <a href="https://www.ipn.mx" target="_blank" class="btn btn-primary">🌐 Portal oficial</a>
+      <a href="https://maps.google.com/?q=IPN+Zacatenco+CDMX" target="_blank" class="btn btn-map">📍 Ver mapa</a>
+    </div>
+  </div>
+
+  <!-- 3. UAM -->
+  <div class="card">
+    <div class="card-header">
+      <div class="uni-icon pub-icon">🔬</div>
+      <div>
+        <h3>Universidad Autónoma Metropolitana</h3>
+        <p class="siglas">UAM</p>
+      </div>
+      <span class="tipo-badge tipo-pub">Pública Autónoma</span>
+    </div>
+    <div class="card-body">
+      <div class="info-row">
+        <span class="icon">📍</span>
+        <span>Av. San Pablo 180, Azcapotzalco, CDMX</span>
+      </div>
+      <div class="info-row">
+        <span class="icon">💰</span>
+        <span>Cuota trimestral: <strong>~$300–$500 MXN</strong></span>
+      </div>
+      <div class="info-row">
+        <span class="icon">📚</span>
+        <strong>Carreras destacadas:</strong>
+      </div>
+      <ul class="carreras-list">
+        <li>Administración</li>
+        <li>Diseño Industrial</li>
+        <li>Ciencias Biológicas</li>
+      </ul>
+    </div>
+    <div class="card-footer">
+      <a href="https://www.uam.mx" target="_blank" class="btn btn-primary">🌐 Portal oficial</a>
+      <a href="https://maps.google.com/?q=UAM+Azcapotzalco+CDMX" target="_blank" class="btn btn-map">📍 Ver mapa</a>
+    </div>
+  </div>
+
+  <!-- 4. UAEM -->
+  <div class="card">
+    <div class="card-header">
+      <div class="uni-icon pub-icon">🏫</div>
+      <div>
+        <h3>Universidad Autónoma del Estado de México</h3>
+        <p class="siglas">UAEM</p>
+      </div>
+      <span class="tipo-badge tipo-pub">Pública Autónoma</span>
+    </div>
+    <div class="card-body">
+      <div class="info-row">
+        <span class="icon">📍</span>
+        <span>Instituto Literario 100, Centro, Toluca, Estado de México</span>
+      </div>
+      <div class="info-row">
+        <span class="icon">💰</span>
+        <span>Inscripción: <strong>~$2,000–$4,000 MXN</strong> (cuotas bajas)</span>
+      </div>
+      <div class="info-row">
+        <span class="icon">📚</span>
+        <strong>Carreras destacadas:</strong>
+      </div>
+      <ul class="carreras-list">
+        <li>Derecho</li>
+        <li>Medicina</li>
+        <li>Arquitectura</li>
+      </ul>
+    </div>
+    <div class="card-footer">
+      <a href="https://www.uaemex.mx" target="_blank" class="btn btn-primary">🌐 Portal oficial</a>
+      <a href="https://maps.google.com/?q=UAEM+Toluca+Estado+de+Mexico" target="_blank" class="btn btn-map">📍 Ver mapa</a>
+    </div>
+  </div>
+
+  <!-- 5. UAGro -->
+  <div class="card">
+    <div class="card-header">
+      <div class="uni-icon pub-icon">🌊</div>
+      <div>
+        <h3>Universidad Autónoma de Guerrero</h3>
+        <p class="siglas">UAGro</p>
+      </div>
+      <span class="tipo-badge tipo-pub">Pública Autónoma</span>
+    </div>
+    <div class="card-body">
+      <div class="info-row">
+        <span class="icon">📍</span>
+        <span>Av. Juárez 52, Zona Centro, Chilpancingo, Guerrero</span>
+      </div>
+      <div class="info-row">
+        <span class="icon">💰</span>
+        <span>Cuota semestral: <strong>~$500–$1,500 MXN</strong></span>
+      </div>
+      <div class="info-row">
+        <span class="icon">📚</span>
+        <strong>Carreras destacadas:</strong>
+      </div>
+      <ul class="carreras-list">
+        <li>Turismo</li>
+        <li>Contaduría</li>
+        <li>Enfermería</li>
+      </ul>
+    </div>
+    <div class="card-footer">
+      <a href="https://www.uagro.mx" target="_blank" class="btn btn-primary">🌐 Portal oficial</a>
+      <a href="https://maps.google.com/?q=Universidad+Autonoma+de+Guerrero+Chilpancingo" target="_blank" class="btn btn-map">📍 Ver mapa</a>
+    </div>
+  </div>
+
+  <!-- 6. BUAP -->
+  <div class="card">
+    <div class="card-header">
+      <div class="uni-icon pub-icon">🎨</div>
+      <div>
+        <h3>Benemérita Universidad Autónoma de Puebla</h3>
+        <p class="siglas">BUAP</p>
+      </div>
+      <span class="tipo-badge tipo-pub">Pública Autónoma</span>
+    </div>
+    <div class="card-body">
+      <div class="info-row">
+        <span class="icon">📍</span>
+        <span>4 Sur 104, Centro Histórico, Puebla, Pue.</span>
+      </div>
+      <div class="info-row">
+        <span class="icon">💰</span>
+        <span>Cuota semestral: <strong>~$1,000–$3,000 MXN</strong></span>
+      </div>
+      <div class="info-row">
+        <span class="icon">📚</span>
+        <strong>Carreras destacadas:</strong>
+      </div>
+      <ul class="carreras-list">
+        <li>Ingeniería Electrónica</li>
+        <li>Gastronomía</li>
+        <li>Psicología</li>
+      </ul>
+    </div>
+    <div class="card-footer">
+      <a href="https://www.buap.mx" target="_blank" class="btn btn-primary">🌐 Portal oficial</a>
+      <a href="https://maps.google.com/?q=BUAP+Puebla+Mexico" target="_blank" class="btn btn-map">📍 Ver mapa</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- PRIVADAS -->
+<div class="section-title" id="privadas">
+  <p class="eyebrow">Régimen Privado</p>
+  <h2>Universidades Privadas</h2>
+  <div class="divider"></div>
+</div>
+
+<div class="grid">
+
+  <!-- 7. TEC -->
+  <div class="card">
+    <div class="card-header">
+      <div class="uni-icon priv-icon">🚀</div>
+      <div>
+        <h3>Instituto Tecnológico y de Estudios Superiores de Monterrey</h3>
+        <p class="siglas">Tec de Monterrey</p>
+      </div>
+      <span class="tipo-badge tipo-priv">Privada</span>
+    </div>
+    <div class="card-body">
+      <div class="info-row">
+        <span class="icon">📍</span>
+        <span>Av. Eugenio Garza Sada 2501, Monterrey, N.L.</span>
+      </div>
+      <div class="info-row">
+        <span class="icon">💰</span>
+        <span>Colegiatura: <strong>~$25,000 MXN/mes</strong>; inscripción ~$20,000 MXN</span>
+      </div>
+      <div class="info-row">
+        <span class="icon">📚</span>
+        <strong>Carreras destacadas:</strong>
+      </div>
+      <ul class="carreras-list">
+        <li>Ingeniería en Tecnología</li>
+        <li>Administración de Empresas</li>
+        <li>Medicina</li>
+      </ul>
+    </div>
+    <div class="card-footer">
+      <a href="https://www.tec.mx" target="_blank" class="btn btn-primary">🌐 Portal oficial</a>
+      <a href="https://maps.google.com/?q=Tecnologico+de+Monterrey+Campus+Monterrey" target="_blank" class="btn btn-map">📍 Ver mapa</a>
+    </div>
+  </div>
+
+  <!-- 8. UIA -->
+  <div class="card">
+    <div class="card-header">
+      <div class="uni-icon priv-icon">✝️</div>
+      <div>
+        <h3>Universidad Iberoamericana</h3>
+        <p class="siglas">UIA — Ibero</p>
+      </div>
+      <span class="tipo-badge tipo-priv">Privada</span>
+    </div>
+    <div class="card-body">
+      <div class="info-row">
+        <span class="icon">📍</span>
+        <span>Prol. Paseo de la Reforma 880, Lomas de Santa Fe, CDMX</span>
+      </div>
+      <div class="info-row">
+        <span class="icon">💰</span>
+        <span>Colegiatura: <strong>~$70,000 MXN/semestre</strong></span>
+      </div>
+      <div class="info-row">
+        <span class="icon">📚</span>
+        <strong>Carreras destacadas:</strong>
+      </div>
+      <ul class="carreras-list">
+        <li>Comunicación</li>
+        <li>Derecho</li>
+        <li>Diseño Gráfico</li>
+      </ul>
+    </div>
+    <div class="card-footer">
+      <a href="https://www.ibero.mx" target="_blank" class="btn btn-primary">🌐 Portal oficial</a>
+      <a href="https://maps.google.com/?q=Universidad+Iberoamericana+Santa+Fe+CDMX" target="_blank" class="btn btn-map">📍 Ver mapa</a>
+    </div>
+  </div>
+
+  <!-- 9. ITAM -->
+  <div class="card">
+    <div class="card-header">
+      <div class="uni-icon priv-icon">📊</div>
+      <div>
+        <h3>Instituto Tecnológico Autónomo de México</h3>
+        <p class="siglas">ITAM</p>
+      </div>
+      <span class="tipo-badge tipo-priv">Privada</span>
+    </div>
+    <div class="card-body">
+      <div class="info-row">
+        <span class="icon">📍</span>
+        <span>Río Hondo 1, Progreso Tizapán, Álvaro Obregón, CDMX</span>
+      </div>
+      <div class="info-row">
+        <span class="icon">💰</span>
+        <span>Colegiatura: <strong>~$18,000–$22,000 MXN/mes</strong>; 60% con beca</span>
+      </div>
+      <div class="info-row">
+        <span class="icon">📚</span>
+        <strong>Carreras destacadas:</strong>
+      </div>
+      <ul class="carreras-list">
+        <li>Economía</li>
+        <li>Administración</li>
+        <li>Ciencias de Datos</li>
+      </ul>
+    </div>
+    <div class="card-footer">
+      <a href="https://www.itam.mx" target="_blank" class="btn btn-primary">🌐 Portal oficial</a>
+      <a href="https://maps.google.com/?q=ITAM+Rio+Hondo+CDMX" target="_blank" class="btn btn-map">📍 Ver mapa</a>
+    </div>
+  </div>
+
+  <!-- 10. Anáhuac -->
+  <div class="card">
+    <div class="card-header">
+      <div class="uni-icon priv-icon">🏥</div>
+      <div>
+        <h3>Universidad Anáhuac México</h3>
+        <p class="siglas">Anáhuac</p>
+      </div>
+      <span class="tipo-badge tipo-priv">Privada</span>
+    </div>
+    <div class="card-body">
+      <div class="info-row">
+        <span class="icon">📍</span>
+        <span>Av. Universidad Anáhuac 46, Naucalpan, Estado de México</span>
+      </div>
+      <div class="info-row">
+        <span class="icon">💰</span>
+        <span>Colegiatura: <strong>~$150,000 MXN/semestre</strong>; becas disponibles</span>
+      </div>
+      <div class="info-row">
+        <span class="icon">📚</span>
+        <strong>Carreras destacadas:</strong>
+      </div>
+      <ul class="carreras-list">
+        <li>Medicina</li>
+        <li>Derecho</li>
+        <li>Ingeniería Industrial</li>
+      </ul>
+    </div>
+    <div class="card-footer">
+      <a href="https://www.anahuac.mx" target="_blank" class="btn btn-primary">🌐 Portal oficial</a>
+      <a href="https://maps.google.com/?q=Universidad+Anahuac+Naucalpan+Mexico" target="_blank" class="btn btn-map">📍 Ver mapa</a>
+    </div>
+  </div>
+
+  <!-- 11. La Salle -->
+  <div class="card">
+    <div class="card-header">
+      <div class="uni-icon priv-icon">⭐</div>
+      <div>
+        <h3>Universidad La Salle México</h3>
+        <p class="siglas">La Salle</p>
+      </div>
+      <span class="tipo-badge tipo-priv">Privada</span>
+    </div>
+    <div class="card-body">
+      <div class="info-row">
+        <span class="icon">📍</span>
+        <span>Benjamín Franklin 47, Hipódromo Condesa, CDMX</span>
+      </div>
+      <div class="info-row">
+        <span class="icon">💰</span>
+        <span>Colegiatura: <strong>~$12,000–$18,000 MXN/mes</strong>; becas y financiamiento</span>
+      </div>
+      <div class="info-row">
+        <span class="icon">📚</span>
+        <strong>Carreras destacadas:</strong>
+      </div>
+      <ul class="carreras-list">
+        <li>Arquitectura</li>
+        <li>Contaduría</li>
+        <li>Ingeniería en Sistemas</li>
+      </ul>
+    </div>
+    <div class="card-footer">
+      <a href="https://www.lasalle.mx" target="_blank" class="btn btn-primary">🌐 Portal oficial</a>
+      <a href="https://maps.google.com/?q=Universidad+La+Salle+Condesa+CDMX" target="_blank" class="btn btn-map">📍 Ver mapa</a>
+    </div>
+  </div>
+
+  <!-- 12. UVM -->
+  <div class="card">
+    <div class="card-header">
+      <div class="uni-icon priv-icon">🌍</div>
+      <div>
+        <h3>Universidad del Valle de México</h3>
+        <p class="siglas">UVM</p>
+      </div>
+      <span class="tipo-badge tipo-priv">Privada</span>
+    </div>
+    <div class="card-body">
+      <div class="info-row">
+        <span class="icon">📍</span>
+        <span>Av. Coyoacán 650, Del Valle, CDMX (varios campus en México)</span>
+      </div>
+      <div class="info-row">
+        <span class="icon">💰</span>
+        <span>Colegiatura: <strong>~$12,000–$18,000 MXN/mes</strong> según campus</span>
+      </div>
+      <div class="info-row">
+        <span class="icon">📚</span>
+        <strong>Carreras destacadas:</strong>
+      </div>
+      <ul class="carreras-list">
+        <li>Psicología</li>
+        <li>Mercadotecnia</li>
+        <li>Ciencias de la Salud</li>
+      </ul>
+    </div>
+    <div class="card-footer">
+      <a href="https://www.uvmnet.edu" target="_blank" class="btn btn-primary">🌐 Portal oficial</a>
+      <a href="https://maps.google.com/?q=UVM+Del+Valle+CDMX" target="_blank" class="btn btn-map">📍 Ver mapa</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- MAPA INTERACTIVO -->
+<div class="section-title">
+  <p class="eyebrow">Ubicaciones</p>
+  <h2>Mapa de Universidades</h2>
+  <div class="divider"></div>
+</div>
+<div style="max-width:1200px;margin:1rem auto 3rem;padding:0 1.5rem;">
+  <div style="border-radius:18px;overflow:hidden;border:2px solid #fce7f3;box-shadow:0 4px 24px rgba(244,114,182,.13);">
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m60!1m12!1m3!1d1884987.4383544083!2d-100.5600!3d19.4326!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m45!3e0!4m5!1s0x85ce0026db097507%3A0x54061076265ee841!2sUNAM%2C%20Ciudad%20de%20M%C3%A9xico!3m2!1d19.3271!2d-99.1776!4m5!1s0x85d1ff3ade17fb45%3A0x9997c4e0c4034c88!2sIPN%2C%20Ciudad%20de%20M%C3%A9xico!3m2!1d19.5058!2d-99.1468!4m5!1s0x85d1f84c6fce8b23%3A0x5f887c2c1b01b4aa!2sTecnol%C3%B3gico%20de%20Monterrey!3m2!1d25.6514!2d-100.2895!4m5!1s0x85ce0026db097507%3A0x54061076265ee841!2sUniversidad%20Ib%C3%A9roamericana%2C%20Santa%20Fe%2C%20Ciudad%20de%20M%C3%A9xico!3m2!1d19.3600!2d-99.2787!4m5!1s0x85d1f84c6fce8b23%3A0x5f887c2c1b01b4aa!2sBUAP%2C%20Puebla!3m2!1d19.0414!2d-98.2063!4m5!1s0x85d1f84c6fce8b23%3A0x5f887c2c1b01b4aa!2sUAEM%2C%20Toluca!3m2!1d19.2826!2d-99.6557!5e0!3m2!1ses!2smx!4v1700000000000"
+      width="100%" height="420" style="border:0;display:block;" allowfullscreen loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+  </div>
+</div>
+
+<!-- CONTACTO -->
+<section id="contacto">
+  <div class="contacto-inner">
+    <h2>📬 Contacto y Autoría</h2>
+    <p style="color:var(--gris);font-size:.9rem;margin-bottom:.5rem;">¿Tienes dudas sobre alguna universidad? Escríbeme.</p>
+
+    <div class="autoria">
+      <p>👩‍🎓 <strong>Desarrolladora:</strong> [Tu nombre completo]</p>
+      <p>🏫 <strong>Grupo:</strong> [Tu grupo]</p>
+      <p>📖 <strong>Asignatura:</strong> Páginas Web — 6to Semestre</p>
+      <p>🏛️ <strong>Institución:</strong> Escuela Preparatoria Oficial No. 39</p>
+    </div>
+
+    <div class="form-group">
+      <label>Nombre completo</label>
+      <input type="text" placeholder="Tu nombre" id="f-nombre"/>
+    </div>
+    <div class="form-group">
+      <label>Correo electrónico</label>
+      <input type="email" placeholder="tucorreo@ejemplo.com" id="f-email"/>
+    </div>
+    <div class="form-group">
+      <label>Tu consulta</label>
+      <textarea placeholder="¿En qué universidad estás interesado? ¿Tienes alguna duda?" id="f-msg"></textarea>
+    </div>
+    <button class="btn-submit" onclick="enviarForm()">Enviar consulta ✉️</button>
+    <div class="form-success" id="form-success">✅ ¡Gracias! Tu consulta fue recibida.</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>Catálogo Universitario México 2025 &nbsp;•&nbsp; Hecho con <span>💗</span> para la clase de Páginas Web</p>
+  <p style="margin-top:.4rem;opacity:.6;">Escuela Preparatoria Oficial No. 39 — 6to Semestre</p>
+</footer>
+
+<script>
+  function enviarForm() {
+    const n = document.getElementById('f-nombre').value.trim();
+    const e = document.getElementById('f-email').value.trim();
+    const m = document.getElementById('f-msg').value.trim();
+    if (!n || !e || !m) { alert('Por favor completa todos los campos 💕'); return; }
+    document.getElementById('form-success').style.display = 'block';
+    document.getElementById('f-nombre').value = '';
+    document.getElementById('f-email').value = '';
+    document.getElementById('f-msg').value = '';
+  }
+</script>
+</body>
+</html>
